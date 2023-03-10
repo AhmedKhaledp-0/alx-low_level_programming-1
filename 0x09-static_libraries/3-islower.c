@@ -1,21 +1,10 @@
-#include <stdio.h>
+#include "main.h"
 /**
- * _islower - (int c)
- * @c: parameter checked
- *
- * Return: 0( success)
+ * _islower - checks for lowercase character
+ * @c: the character to check
+ * Return: 1 if c is lowercase, 0 otherwise
  */
 int _islower(int c)
 {
-	int r;
-
-	if (c >= 97 && c <= 122)
-	{
-		r = 1;
-	}
-	else
-	{
-		r = 0;
-	}
-	return (r);
+	return (c >= 'a' && c <= 'z');
 }
