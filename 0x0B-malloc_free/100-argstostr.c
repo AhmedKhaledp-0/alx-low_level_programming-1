@@ -1,45 +1,49 @@
 #include "main.h"
+#include <stdlib.h>
+#include <string.h>
 
 /**
- * argstostr - a function that concatenates all the arguments of your program.
- * @ac: argument count
- * @av: argument vector
- *
- * - Returns NULL if ac == 0 or av == NULL
- * - Returns a pointer to a new string, or NULL if it fails
- * - Each argument should be followed by a \n in the new string
- *
- * Return: a new string or NULL when it fails
+ * argstostr - Entry point
+ * @ac: int
+ * @av: Character
+ * Description: concatenates all the arguments of your program
+ * Return: char
  */
 
 char *argstostr(int ac, char **av)
 {
+	int i, j, len = 0, index = 0;
 	char *str;
-	int i, l = 0, j, w_len = 0;
-
-	for (i = 0; i < ac; i++, w_len++)
-		w_len += strlen(av[i]);
 
 	if (ac == 0 || av == NULL)
-		return (NULL);
-
-	str = malloc(1 + w_len * sizeof(char));
-	if (str == NULL)
 	{
-		free(str);
-		return (0);
+		return (NULL);
 	}
-
+	/* Calculate the total length of the concatenated string */
 	for (i = 0; i < ac; i++)
 	{
-		for (j = 0; av[i][j] != '\0'; j++, l++)
+		for (j = 0; av[i][j]; j++)
 		{
-			str[l] = av[i][j];
+			len++;
 		}
-		str[l] = '\n';
-		l++;
+		len++; /* add space for newline */
 	}
-	str[l] = '\0';
-
+	len++; /* add space for null terminator */
+	str = malloc(len * sizeof(char));
+	/* Allocate memory for the concatenated string */
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+	/* Concatenate the strings */
+	for (i = 0; i < ac; i++)
+	{
+		for (j = 0; av[i][j]; j++)
+		{
+			str[index++] = av[i][j];
+		}
+		str[index++] = '\n';
+	}
+	str[index] = '\0';
 	return (str);
 }
