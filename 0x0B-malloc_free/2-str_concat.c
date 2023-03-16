@@ -1,52 +1,45 @@
 #include "main.h"
+#include <stdlib.h>
 
 /**
- * str_concat -  a function that concatenates two strings.
- * @s1: first string
- * @s2: second string
- *
- * - The returned pointer should point to a newly allocated space in memory
- *   which contains the contents of s1, followed by the contents of s2, and
- *   null terminated
- * - if NULL is passed, treat it as an empty string
- * - The function should return NULL on failure
- *
- * Return: pointer to the new string array or NULL on failure
+ * *str_concat - Entry point
+ * Description: Concatenates two strings
+ * @s1: Character
+ * @s2: Character
+ * Return: Char
  */
+
 char *str_concat(char *s1, char *s2)
 {
-	int i, l1, l2, len, s;
-	char *ar;
+	int len = 0, i, j = 0;
+	char *ans;
 
 	if (s1 == NULL)
-		l1 = 0;
-	else
-		l1 = strlen(s1);
-
+	{
+		s1 = "";
+	}
 	if (s2 == NULL)
-		l2 = 0;
-	else
-		l2 = strlen(s2);
-
-	len = l1 + l2 + 1;
-	ar = malloc(len);
-
-	if (ar == NULL)
-		return (NULL);
-	for (i = 0; i < len; i++)
 	{
-		if (s1 == NULL || s1[i] == '\0')
-			break;
-		ar[i] = s1[i];
+		s2 = "";
+	}
+	for (i = 0; s1[i] || s2[i]; i++)
+	{
+		len++;
 	}
 
-	s = 0;
-	for (; i < len; i++)
+	ans = malloc((len) * sizeof(char));
+	/* Allocates memory for the ans string */
+	if (ans == NULL)
 	{
-		if (s2 == NULL)
-			break;
-		ar[i] = s2[s];
-		s++;
+		return (NULL); /* Allocation failed */
 	}
-	return (ar);
+	for (i = 0; s1[i]; i++)
+	{
+		ans[j++] = s1[i];
+	} /* Copies contents of s1 to the ans string */
+	for (i = 0; s2[i]; i++)
+	{
+		ans[j++] = s2[i];
+	} /* Copies contents of s2 to the ans string */
+	return (ans);
 }

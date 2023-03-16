@@ -1,57 +1,108 @@
 #include "main.h"
+#include <stdlib.h>
+
+int word_len(char *str);
+int count_words(char *str);
+char **strtow(char *str);
 
 /**
- * strtow - a function that splits a string into words.
- * @str: string
+ * word_len - Locates the index marking the end of the
+ *            first word contained within a string.
+ * @str: The string to be searched.
  *
- * Each element of this array should contain a single word, null-terminated
- * The last element of the returned array should be NULL
- * Words are separated by spaces
- * Returns NULL if str == NULL or str == ""
- *
- * Return: a pointer to an array of strings (words)
+ * Return: The index marking the end of the initial word pointed to by str.
  */
+int word_len(char *str)
+{
+	int index = 0, len = 0;
 
+	while (*(str + index) && *(str + index) != ' ')
+	{
+		/* iterate until end of string or a space is found */
+		len++;
+		index++;
+	}
+
+	return (len);
+}
+
+/**
+ * count_words - Counts the number of words contained within a string.
+ * @str: The string to be searched.
+ *
+ * Return: The number of words contained within str.
+ */
+int count_words(char *str)
+{
+	int index = 0, words = 0, len = 0;
+
+	for (index = 0; *(str + index); index++)
+		len++;
+
+	for (index = 0; index < len; index++)
+	{
+		if (*(str + index) != ' ')
+		{
+			words++;
+			index += word_len(str + index);
+		}
+	}
+
+	return (words);
+}
+
+/**
+ * strtow - Splits a string into words.
+ * @str: The string to be split.
+ *
+ * Return: If str = NULL, str = "", or the function fails - NULL.
+ *         Otherwise - a pointer to an array of strings (words).
+ */
 char **strtow(char *str)
 {
-	char **strw;
-	int i = 0, j, p = 0, l, n;
+	char **strings;
+	int index = 0, words, w, letters, l;
 
-	if (str == NULL || *str == '\0')
-		return (NULL);
-
-	l = strlen(str);
-	strw = malloc(l * sizeof(char *));
-	if (strw == NULL)
+	if (str == NULL || str[0] == '\0')
 	{
-		free(strw);
+		/* check for invalid input */
 		return (NULL);
 	}
-
-	while (str[i] != '\0')
+	/* get the number of words in the string */
+	words = count_words(str);
+	if (words == 0)
 	{
-		if (str[i] != ' ' && str[i - 1] == ' ')
+		return (NULL);
+	}
+	/* allocate memory for the array of words */
+	strings = malloc(sizeof(char *) * (words + 1));
+	if (strings == NULL)
+		return (NULL);
+
+	for (w = 0; w < words; w++)
+	{
+		while (str[index] == ' ')
+			index++;
+
+		letters = word_len(str + index);
+
+		strings[w] = malloc(sizeof(char) * (letters + 1));
+
+		if (strings[w] == NULL)
 		{
-			j = 1;
-			while (str[i + j] != ' ')
-				j++;
-			strw[p] = malloc(j * sizeof(char));
-			if (strw[p] == NULL)
-			{
-				while (p--)
-					free(strw[p]);
-				free(strw);
-				return (NULL);
-			}
-			for (n = 0; n < j; n++)
-				strw[p][n] = str[i + n];
-			strw[p][n] = '\0';
-			p++;
-			i += j;
+			for (; w >= 0; w--)
+				free(strings[w]);
+
+			free(strings);
+			return (NULL);
 		}
-		else
-			i++;
+
+		for (l = 0; l < letters; l++)
+			strings[w][l] = str[index++];
+
+		strings[w][l] = '\0';
 	}
-	strw[p] = NULL;
-	return (strw);
+	strings[w] = NULL;
+
+	return (strings);
 }
