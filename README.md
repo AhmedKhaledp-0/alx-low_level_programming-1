@@ -1,1 +1,1 @@
-0x00. C - Hello, World
+A new C programmer is born today @ALX
