@@ -1,97 +1,165 @@
 #include "main.h"
-#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
- * mul - a program that multiplies two positive numbers.
- * @num1: first number, second argument
- * @l1: length of string 1
- * @l2: length of stirng 0
- * @num2: second number, third argument
- * 
- * Description
- * - num1 and num2 will be passed in base 10
- * - Print the result, followed by a new line
+ * _strlen - returns the length of a string
+ * @s: string s
+ * Return: length of string
  */
-void *mul(char *n1, int l1, char *n2, int l2)
+int _strlen(char *s)
 {
-	int i, multiply;
-	char *sol;
-	printf("%s, %s", n1, n2);
+	char *p = s;
 
-	(void) multiply;
-	sol = malloc(l1 + l2 + 1);
-	if (sol == NULL)
-		return (NULL);
-
-	for (i = 0; i < (l1 + l2 + 1); i++)
-		sol[i] = '0';
-
-	i = 0;
-	while (i < l1)
-	{
-		multiply = n1[i] * n2[i];
-
-	}
-
-	return (sol);
+	while (*s)
+		s++;
+	return (s - p);
 }
 
 /**
- * _isdigit - check for digit
- * @argv: argument vector
- *
- * Return: 0 when it is true and 1 if it is not
+ * _memset - fills memory with a constant byte.
+ * @s: the memory area to be filled
+ * @b: the constant byte
+ * @n: number of bytes to fill with char b
+ * Return: a pointer to the memory area s.
  */
-int _isdigit(char **argv)
-{
-	int i, j, s;
 
-	s = 0;
-	for (i = 1; i < 3; i++)
-	{
-		for (j = 0; argv[i][j] != '\0'; j++)
-		{
-			printf("%s", argv[i]);
-			if (argv[i][j] < '0' || argv[i][j] > '9')
-			{
-				printf("Error\n");
-				exit(98);
-			}
-		}
-	}
+char *_memset(char *s, char b, unsigned int n)
+{
+	char *p = s;
+
+	for (; n; n--)
+		*p++ = b;
+
 	return (s);
 }
 
 /**
- * main - run program
- * @argc: argument count
- * @argv: argument vector
- *
- * - If the number of arguments is incorrect, print Error, followed by a new
- *   line, and exit with a status of 98
- * - num1 and num2 should only be composed of digits.
- *   If not, print Error, followed by a new line, and exit with a status of 98
- *
- * Return: 0 success
+ * _calloc - allocates memory for an array
+ * @nmemb: number of elements
+ * @size: of each element
+ * Return: void *
  */
-int main(int argc, char *argv[])
+void *_calloc(unsigned int nmemb, unsigned int size)
 {
-	int l1, l2;
-	printf("%d", argc);
-       
-	l1 = strlen(argv[1]);
-	l2 = strlen(argv[2]);
+	void *ptr;
 
-	_isdigit(argv);
+	if (size == 0 || nmemb == 0)
+		return (NULL);
 
-	(void) argc;
-	/* if (!(argc == 3))
+	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
+
+	_memset(ptr, 0, size * nmemb);
+
+	return (ptr);
+}
+
+/**
+ *_puts - prints a string, followed by a new line, to stdout.
+ * @str: the input string
+ * Return: nothing to return.
+ */
+void _puts(char *str)
+{
+	while (*str != 0)
 	{
-		printf("Error\n");
+		_putchar(*str);
+		str++;
+	}
+	_putchar('\n');
+}
+
+/**
+ * strNumbers - determines if string has only numbers
+ * @str: input string
+ * Return: 0 if false, 1 if true
+ */
+int strNumbers(char *str)
+{
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+/**
+ * multiply - multiplies two numbers (in string), and prints the result.
+ * @n1: first number
+ * @n2: second number
+ * Return: void
+ */
+
+void multiply(char *n1, char *n2)
+{
+	int idx, n1n, n2n, res, tmp, total;
+	int n1l = _strlen(n1);
+	int n2l = _strlen(n2);
+
+	int *ptr;
+
+	tmp = n2l;
+	total = n1l + n2l;
+	ptr = _calloc(total, sizeof(int));
+	for (n1l--; n1l >= 0; n1l--)
+	{
+		n1n = n1[n1l] - '0';
+		res = 0;
+		n2l = tmp;
+		for (n2l--; n2l >= 0; n2l--)
+		{
+			n2n = n2[n2l] - '0';
+			res += ptr[n1l + n2l + 1] + (n1n * n2n);
+			ptr[n1l + n2l + 1] = res % 10;
+			res /= 10;
+		}
+		if (res)
+		{
+			ptr[n1l + n2l + 1] = res % 10;
+		}
+	}
+	res = 0;
+	for (idx = 0; idx < total; idx++)
+	{
+		if (ptr[idx] == 0 && res == 1)
+			_putchar(ptr[idx] + '0');
+		else if (ptr[idx] > 0)
+		{
+			_putchar(ptr[idx] + '0');
+			res = 1;
+		}
+	}
+	_putchar('\n');
+	free(ptr);
+}
+
+/**
+ * main - adds positive numbers.
+ * @argc: the number of arguments
+ * @argv: the arguments
+ *
+ * Return: 0
+ */
+
+int main(int argc, char **argv)
+{
+	char *nb1 = argv[1];
+	char *nb2 = argv[2];
+
+	if (argc != 3 || !strNumbers(nb1) || !strNumbers(nb2))
+	{
+		_puts("Error");
 		exit(98);
-	} */
-
-	mul(argv[1], l1, argv[2], l2);
-
+	}
+	if (*nb1 == '0' || *nb2 == '0')
+		_puts("0");
+	else
+	{
+		multiply(nb1, nb2);
+	}
 	return (0);
 }
