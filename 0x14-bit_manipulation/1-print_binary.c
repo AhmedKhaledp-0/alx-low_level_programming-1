@@ -6,12 +6,10 @@
  */
 void print_binary(unsigned long int n)
 {
-	int val = 1;
-
-	if (n > val)
+	if (n > 1)
 	{
-		print_binary(n >> val);
+		print_binary(n >> 1);
 	}
 
-	_putchar((n & val) + '0');
+	_putchar((n & 1) ? '1' : '0');
 }
