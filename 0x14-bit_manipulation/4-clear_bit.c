@@ -2,6 +2,7 @@
 
 /**
  * clear_bit - Clears a bit at a given index in an unsigned long integer.
+
  * @n: A pointer to the unsigned long integer.
  * @index: The index of the bit to clear (starting from 0).
  *
@@ -10,11 +11,14 @@
  */
 int clear_bit(unsigned long int *n, unsigned int index)
 {
-	if (index >= sizeof(unsigned long int) * 8)
+	unsigned long int num_val;
+
+	/* checking */
+	if (index > (sizeof(unsigned long int) * 8 - 1))
 		return (-1);
 
-	unsigned long int mask = 1UL << index;
-	*n &= ~mask;
+	num_val = ~(1 << index);
+	*n = *n & num_val;
 
 	return (1);
 }
