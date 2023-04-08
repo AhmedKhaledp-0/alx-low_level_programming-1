@@ -10,34 +10,34 @@
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-    if (filename == NULL) 
-    {
-        return (-1);
-    }
+	if (filename == NULL)
+	{
+		return (-1);
+	}
 
-    int f_path = open(filename, O_WRONLY | O_APPEND);
+	int f_path = open(filename, O_WRONLY | O_APPEND);
 
-    if (f_path == -1)
-    {
-        return (-1);
-    }
+	if (f_path == -1)
+	{
+		return (-1);
+	}
 
-    if (text_content == NULL) 
-    {
-        close(f_path);
-        return (1);
-    }
+	if (text_content == NULL)
+	{
+		close(f_path);
+		return (1);
+	}
 
-    int num = 0;
-    
-    while (text_content[num] != '\0') 
-    {
-        ++num;
-    }
+	int num = 0;
 
-    int write_path = write(f_path, text_content, num);
+	while (text_content[num] != '\0')
+	{
+		++num;
+	}
 
-    close(f_path);
+	int write_path = write(f_path, text_content, num);
 
-    return (write_path == num ? 1 : -1);
+	close(f_path);
+
+	return (write_path == num ? 1 : -1);
 }
