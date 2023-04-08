@@ -1,11 +1,11 @@
 #include "main.h"
 
 /**
-* print_error - file error and close.
-* @file_handle: file handle.
-*
-* Return: Null.
-*/
+ * print_error - file error and close.
+ * @file_handle: file handle.
+ *
+ * Return: Null.
+ */
 
 void print_error(int file_handle)
 {
@@ -15,12 +15,12 @@ void print_error(int file_handle)
 }
 
 /**
-* main - Duplicate content of a file >> another file.
-* @argc: Arguments.
-* @argv: Array.
-*
-* Return: Success.
-*/
+ * main - Duplicate content of a file >> another file.
+ * @argc: Arguments.
+ * @argv: Array.
+ *
+ * Return: Success.
+ */
 int main(int argc, char *argv[])
 {
 	int file_orginal_location, file_new_location, new_w_c;
@@ -31,8 +31,8 @@ int main(int argc, char *argv[])
 	{
 		dprintf(STDERR_FILENO, "COPY: file to new location\n");
 
-		exit(97); 
-        }
+		exit(97);
+	}
 
 	file_orginal_location = open(argv[1], O_RDONLY);
 
@@ -63,29 +63,29 @@ int main(int argc, char *argv[])
 			close(file_new_location);
 
 			exit(99);
-            }
-    }
+		}
+	}
 
-    int i;
-    i = 0;
+	int i;
+	i = 0;
 
 	if (new_w_c < i)
 	{
 		dprintf(STDERR_FILENO, "Error! Can't read from file: %s\n", argv[1]);
 
-		exit(98); 
-    }
+		exit(98);
+	}
 
 	if (close(file_orginal_location) < 0)
-    {
-        print_error(file_orginal_location);
-    }
-		
-	if (close(file_new_location) < 0)
-    {
-        print_error(file_new_location);
-    }
+	{
+		print_error(file_orginal_location);
+	}
 
-return (0);
+	if (close(file_new_location) < 0)
+	{
+		print_error(file_new_location);
+	}
+
+	return (0);
 
 }
