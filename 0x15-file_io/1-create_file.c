@@ -10,15 +10,15 @@
 int create_file(const char *filename, char *text_content)
 {
 	int dir;
-    int wrt; 
-    int file_len;
+	int wrt;
+	int file_len;
 
-    file_len = 0;
+	file_len = 0;
 
 	if (filename == NULL)
-    {
-        return (-1);
-    }
+	{
+		return (-1);
+	}
 
 	if (text_content != NULL)
 	{
@@ -31,10 +31,10 @@ int create_file(const char *filename, char *text_content)
 	wrt = write(dir, text_content, file_len);
 
 	if (dir == -1 || wrt == -1)
-    {
-        return (-1);
-    }
-		
+	{
+		return (-1);
+	}
+
 	close(dir);
 
 	return (1);
