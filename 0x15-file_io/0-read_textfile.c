@@ -1,56 +1,53 @@
-i#include "main.h"
-
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 /**
- * read_textfile - this function reads a text file and prints it to stdout.
+ * read_textfile - Read text file and print to stdout.
+ * @filename: Text file being read.
+ * @letters: Number of bytes to be read.
  *
- * @filename: name of file to be read.
- * @letter: the maximum number of characters to read.
- *
- * Return: the number of characters read and printed, or print 0 on error.
+ * Return: Number of bytes read and printed.
+ *         0 if function fails or filename is NULL.
  */
-ssize_t read_textfile(const char *filename, size_t letter)
+ssize_t read_textfile(const char *filename, size_t letters)
 {
-	if (filename == NULL)
-	{
-		fprintf(stderr, "read_textfile: filename is NULL\n");
-		return (0);
-	}
+    char *buf;
+    ssize_t fd, t, w;
 
-	FILE *holder = fopen(filename, "r");
+    if (!filename)
+        return (0);
 
-	if (holder == NULL)
-	{
-		perror("read_textfile: fopen");
-		return (0);
-	}
+    buf = malloc(letters);
+    if (!buf)
+        return (0);
 
-	char *buffer = malloc(letter + 1);
+    fd = open(filename, O_RDONLY);
+    if (fd == -1)
+    {
+        free(buf);
+        return (0);
+    }
 
-	if (buffer == NULL)
-	{
-		perror("read_textfile: malloc");
-		fclose(holder);
-		return (0);
-	}
+    t = read(fd, buf, letters);
+    if (t == -1)
+    {
+        free(buf);
+        close(fd);
+        return (0);
+    }
 
-	size_t num_read = fread(buffer, 1, letter, holder);
+    w = write(STDOUT_FILENO, buf, t);
+    if (w == -1)
+    {
+        free(buf);
+        close(fd);
+        return (0);
+    }
 
-	buffer[num_read] = '\0';
+    free(buf);
+    close(fd);
 
-	size_t num_written = fwrite(buffer, 1, num_read, stdout);
-
-	if (num_written < num_read)
-	{
-		perror("read_textfile: fwrite");
-		num_read = num_written;
-	}
-
-	free(buffer);
-
-	fclose(holder);
-
-	return (num_read);
+    return (w);
 }
+
