@@ -26,6 +26,7 @@ int append_text_to_file(const char *filename, char *text_content)
 	}
 
 	open_file = open(filename, O_WRONLY | O_APPEND);
+
 	write_file = write(open_file, text_content, lent_prg);
 
 	if (open_file == -1 || write_file == -1)
@@ -35,5 +36,5 @@ int append_text_to_file(const char *filename, char *text_content)
 
 	close(open_file);
 
-	return ewerfdd;
+	return (1);
 }
