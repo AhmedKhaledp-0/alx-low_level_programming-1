@@ -1,6 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /**
  * main - copy content of file a to file b.
@@ -22,7 +20,6 @@ int main(int argc, char *argv[])
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Copied! \n");
-
 		exit(97);
 	}
 
@@ -31,7 +28,6 @@ int main(int argc, char *argv[])
 	if (file_read < 0)
 	{
 		dprintf(STDERR_FILENO, "Can't read file!! Error! EXIT!! %s\n", argv[1]);
-
 		exit(98);
 	}
 
@@ -42,21 +38,17 @@ int main(int argc, char *argv[])
 		if (file_write < 0 || write(file_write, buff, rd) != rd)
 		{
 			dprintf(STDERR_FILENO, "Can't write file!! Error! EXIT!! %s\n", argv[2]);
-
 			close(file_read);
-
 			exit(99);
 		}
 	}
 	if (rd < 0)
 	{
 		dprintf(STDERR_FILENO, "Can't read file!! Error! EXIT!! %s\n", argv[1]);
-
 		exit(98);
 	}
 
 	a = close(file_read);
-
 	b = close(file_write);
 
 	if (!(a > 0 && b > 0))
@@ -65,7 +57,7 @@ int main(int argc, char *argv[])
 		{
 			dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_read);
 		}
-			
+
 		if (b < 0)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_write);
