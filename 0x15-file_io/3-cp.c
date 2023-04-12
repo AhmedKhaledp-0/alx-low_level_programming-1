@@ -62,7 +62,6 @@ int main(int argc, char *argv[])
 		dprintf(STDERR_FILENO, "Copy!! \n");
 		exit(97);
 	}
-
 	buffer = create_buffer(argv[2]);
 	src = open(argv[1], O_RDONLY);
 	r_file = read(src, buffer, 1024);
@@ -83,16 +82,11 @@ int main(int argc, char *argv[])
 			free(buffer);
 			exit(99);
 		}
-
 		r_file = read(src, buffer, 1024);
 		destination = open(argv[2], O_WRONLY | O_APPEND);
-
 	} while (r_file > 0);
-
 	free(buffer);
-
 	close_file(src);
-
 	close_file(destination);
 
 	return (0);
