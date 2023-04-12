@@ -2,16 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char *create_buffer(char *file_md);
-void close_file(int file_dir);
-
 /**
- * create_buffer - This function fress 1024 bytes for a buffer.
- * @file_md: buffer destination storing chars.
+ * create_buffer - This function will free 1024 bytes for a buffer.
+ * @file: buffer destination storing our chars.
  *
  * Return: pointer destination new allocated buffer.
  */
-char *create_buffer(char *file_md)
+char *create_buffer(char *file)
 {
 	char *buffer;
 
@@ -19,7 +16,7 @@ char *create_buffer(char *file_md)
 
 	if (!buffer)
 	{
-		dprintf(STDERR_FILENO, "Error!! Write Error destination %s\n", file_md);
+		dprintf(STDERR_FILENO, "Error!! Write Error destination %s\n", file);
 		exit(99);
 	}
 
@@ -27,19 +24,19 @@ char *create_buffer(char *file_md)
 }
 
 /**
- * close_file - will close file_md.
+ * close_file - will close file.
  *
- * @file_dir: file destination be closed.
+ * @file: file destination be closed.
  */
-void close_file(int file_dir)
+void close_file(int file)
 {
 	int cls;
 
-	cls = close(file_dir);
+	cls = close(file);
 
 	if (cls == -1)
 	{
-		dprintf(STDERR_FILENO, "Error!! close file_dir error!! %d\n", file_dir);
+		dprintf(STDERR_FILENO, "Error!! close file_dir error!! %d\n", file);
 		exit(100);
 	}
 }
