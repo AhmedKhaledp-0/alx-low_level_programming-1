@@ -3,18 +3,14 @@
 #include <stdlib.h>
 
 char *create_buffer(char *file_md);
-
 void close_file(int file_dir);
 
 /**
  * create_buffer - This function fress 1024 bytes for a buffer.
- *
  * @file_md: buffer destination storing chars.
- *
  *
  * Return: pointer destination new allocated buffer.
  */
-
 char *create_buffer(char *file_md)
 {
 	char *buffer;
@@ -35,7 +31,6 @@ char *create_buffer(char *file_md)
  *
  * @file_dir: file destination be closed.
  */
-
 void close_file(int file_dir)
 {
 	int cls;
@@ -56,7 +51,6 @@ void close_file(int file_dir)
  *
  * Return: 0 on success.
  */
-
 int main(int argc, char *argv[])
 {
 	int src;
@@ -82,7 +76,6 @@ int main(int argc, char *argv[])
 		{
 			dprintf(STDERR_FILENO, "Can't read file!! Error! EXIT!! %s\n", argv[1]);
 			free(buffer);
-
 			exit(98);
 		}
 
@@ -91,7 +84,6 @@ int main(int argc, char *argv[])
 		{
 			dprintf(STDERR_FILENO, "Can't write file!! Error! EXIT!! %s\n", argv[2]);
 			free(buffer);
-
 			exit(99);
 		}
 
