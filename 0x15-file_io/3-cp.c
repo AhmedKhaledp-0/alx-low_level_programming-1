@@ -8,10 +8,10 @@ void close_file(int file_dir);
 
 /**
  * create_buffer - This function fress 1024 bytes for a buffer.
- * 
+ *
  * @file_md: buffer destination storing chars.
  *
- * 
+ *
  * Return: pointer destination new allocated buffer.
  */
 
@@ -32,7 +32,7 @@ char *create_buffer(char *file_md)
 
 /**
  * close_file - will close file_md.
- * 
+ *
  * @file_dir: file destination be closed.
  */
 
